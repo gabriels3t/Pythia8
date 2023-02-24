@@ -1,0 +1,5 @@
+Beams:idA = 2212        ! primeiro feixe de proton
+Beams:idB = 2212        ! Segundo feixe de proton
+Beams:eCM = 14.e4         ! Energia da colisao
+SoftQCD:all = on
+HardQCD:all = on
