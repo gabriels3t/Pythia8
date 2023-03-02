@@ -2,7 +2,7 @@ import pandas as pd
 import ROOT 
 import array
 
-nome_arquivo = ['data/id.dat','data/massa.dat','data/momento.dat','data/px_momento.dat','data/py_momento.dat','data/pz_momento.dat','data/pT.dat','data/energia_cinetica.dat']
+nome_arquivo = ['data/nEvent.dat','data/id.dat','data/massa.dat','data/momento.dat','data/px_momento.dat','data/py_momento.dat','data/pz_momento.dat','data/pT.dat','data/energia_cinetica.dat']
 for i in range(len(nome_arquivo)):
     arquivo = open(nome_arquivo[i],'r+')
     arquivo.seek(0)
@@ -17,6 +17,7 @@ py_df=pd.read_csv("data/py_momento.dat")
 pz_df=pd.read_csv("data/pz_momento.dat")
 ener_cinetica_df= pd.read_csv("data/energia_cinetica.dat")
 pT_df = pd.read_csv("data/pT.dat")
+evento_df = pd.read_csv("data/nEvent.dat")
 
 
 
@@ -31,8 +32,10 @@ py = array.array("d",py_df['Arquivo'].array)
 pz = array.array("d",pz_df['Arquivo'].array)
 pT = array.array("d",pT_df['Arquivo'].array)
 ener_cinetica = array.array("d",ener_cinetica_df['Arquivo'].array)
+evento = array.array("i", map(int, evento_df['Arquivo'].values.tolist()))
 
 tree.Branch("id",id_particula,"id_particula/I")
+tree.Branch("evento",evento,"evento/I")
 tree.Branch("massa",massa,"massa/D")
 tree.Branch("momento",momento,"momento/D")
 tree.Branch("px",px,"px/D")
@@ -49,6 +52,7 @@ for i in range(len(id_df)):
     py[0]=py[i]
     pz[0]=pz[i]
     pT[0]=pT[i]
+    evento[0]=evento[i]
     ener_cinetica[0]=ener_cinetica[i]
     tree.Fill()
 

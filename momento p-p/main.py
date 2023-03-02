@@ -14,6 +14,7 @@ pythia = pythia8.Pythia()
 pythia.readFile("macro.cmnd") #Ler macro
 
 nEvents = 1000
+
 pythia.init()
 
 # Criar dados
@@ -25,7 +26,7 @@ pz_array= []
 momento_array = []
 ener_cinetica_array = []
 pT_array=[]
-
+eventos = []
 
 #event Loop 
 for i in range(nEvents):
@@ -34,6 +35,8 @@ for i in range(nEvents):
     px=py=pz = momento = 0
 
     for particle in pythia.event:
+        #evento
+        eventos.append(i)
         id_array.append(particle.id())
         #Massa 
         massa_array.append(particle.m())
@@ -59,3 +62,4 @@ np.savetxt("data/pz_momento.dat",pz_array,delimiter=',')
 np.savetxt("data/momento.dat",momento_array,delimiter=',')
 np.savetxt("data/pT.dat",pT_array,delimiter=',')
 np.savetxt("data/energia_cinetica.dat",ener_cinetica_array,delimiter=',')
+np.savetxt("data/nEvent.dat",eventos,delimiter=',')
