@@ -23,7 +23,7 @@ pt, px, py, pz, pt, eta(rapidez), phi (ângulo azimutal)
 """
 
 n_event = 1000 # Numero de eventos 
-id =[];pT = [];px = [];py = [];pz = [];eta = [];phi = [];event=[]
+id =[];pT = [];px = [];py = [];pz = [];eta = [];phi = [];event=[];particle_name=[]
 #loop event
 for i in range(n_event):
     if not pythia.next(): continue
@@ -38,6 +38,7 @@ for i in range(n_event):
            pz.append(particle.pz())
            eta.append(particle.eta())
            phi.append(particle.phi())
+           particle_name.append([particle.name(),particle.id()])
 
 np.savetxt("data/id.dat",id,delimiter=',')
 np.savetxt("data/pT.dat",pT,delimiter=',')
@@ -47,3 +48,4 @@ np.savetxt("data/pz.dat",pz,delimiter=',')
 np.savetxt("data/eta.dat",eta,delimiter=',')
 np.savetxt("data/phi.dat",phi,delimiter=',')
 np.savetxt("data/event.dat",event,delimiter=',')
+np.savetxt("data/name_id_particle.dat",particle_name,delimiter=',', fmt='%s')
