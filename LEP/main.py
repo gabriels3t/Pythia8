@@ -22,7 +22,7 @@ pythia.init() # Inicialização
 pt, px, py, pz, pt, eta(rapidez), phi (ângulo azimutal)
 """
 
-n_event = 10 # Numero de eventos 
+n_event = 1000 # Numero de eventos 
 id =[];pT = [];px = [];py = [];pz = [];eta = [];phi = [];event=[]
 #loop event
 for i in range(n_event):
