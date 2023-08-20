@@ -12,8 +12,8 @@ import numpy as np
 pythia = pythia8.Pythia()
 pythia.readString("Beams:idA = 11") #eletron
 pythia.readString("Beams:idB = -11") #positron
-pythia.readString("Beams:eCM = 209") #Gev 
-pythia.readString("HardQCD:all = on") # Utilizado para jet de altas energias 
+pythia.readString("Beams:eCM = 91.19") #Gev  refazer com  91.19 gev (energia de cross section do bozon z
+#pythia.readString("HardQCD:all = on") # Utilizado para jet de altas energias 1 bi > que z boson
 pythia.readString("WeakSingleBoson:ffbar2gmZ = on") # produzir boson Z  
 pythia.init() # Inicialização 
 
@@ -22,7 +22,7 @@ pythia.init() # Inicialização
 pt, px, py, pz, pt, eta(rapidez), phi (ângulo azimutal)
 """
 
-n_event = 1000 # Numero de eventos 
+n_event = 10000 # Numero de eventos 
 id =[];pT = [];px = [];py = [];pz = [];eta = [];phi = [];event=[];particle_name=[]
 #loop event
 for i in range(n_event):
@@ -40,12 +40,12 @@ for i in range(n_event):
            phi.append(particle.phi())
            particle_name.append([particle.name(),particle.id()])
 
-np.savetxt("data/id.dat",id,delimiter=',')
-np.savetxt("data/pT.dat",pT,delimiter=',')
-np.savetxt("data/px.dat",px,delimiter=',')
-np.savetxt("data/py.dat",py,delimiter=',')
-np.savetxt("data/pz.dat",pz,delimiter=',')
-np.savetxt("data/eta.dat",eta,delimiter=',')
-np.savetxt("data/phi.dat",phi,delimiter=',')
-np.savetxt("data/event.dat",event,delimiter=',')
-np.savetxt("data/name_id_particle.dat",particle_name,delimiter=',', fmt='%s')
+np.savetxt("data/91.19GeV/id.dat",id,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/pT.dat",pT,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/px.dat",px,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/py.dat",py,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/pz.dat",pz,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/eta.dat",eta,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/phi.dat",phi,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/event.dat",event,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/name_id_particle.dat",particle_name,delimiter=',', fmt='%s')
