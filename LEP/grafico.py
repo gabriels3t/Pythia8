@@ -1,17 +1,19 @@
 import ROOT
 import sys
 
-def grafico(arquivo,consulta):
+def grafico(arquivo,branch,consulta):
     canvas = ROOT.TCanvas("canvas", "Canvas", 800, 600)
     
     entrada = ROOT.TFile(arquivo,'read')
     tree = entrada.Get("tree")
-    histogram = ROOT.TH1F("histograma_phi", "abs(id)==321 || abs(id)==211;\pi ;Contagem", 100, -ROOT.Math.Pi(),ROOT.Math.Pi())
+    hist_name = "histograma_"+branch
+    print(hist_name)
+    histogram = ROOT.TH1F(hist_name, "abs(id)==321 || abs(id)==211;\pi ;Contagem", 100, -ROOT.Math.Pi(),ROOT.Math.Pi())
     histogram.GetXaxis().SetTitleSize(0.05) # Tamanho legenda X
     histogram.GetYaxis().SetTitleSize(0.05)
-    histogram.GetYaxis().SetRangeUser(0, 200)
+    #   histogram.GetYaxis().SetRangeUser(0, 200)
     histogram.SetFillColor(ROOT.kBlue-9)
-    tree.Draw("phi >> histograma_phi", consulta)
+    tree.Draw(branch+">>"+hist_name, consulta)
 
 
     
@@ -36,8 +38,9 @@ def switch(case,arquivo):
    if case == 1:
     infos_branch(arquivo)
    elif case ==2:
-    consulta = input("insira o Comando : ")
-    grafico(arquivo,consulta)
+    branch = input("Insira o nome da Branch : ")
+    consulta = input("Insira o Comando : ")
+    grafico(arquivo,branch,consulta)
 """
 
 endereco = "data/root/data.root"
