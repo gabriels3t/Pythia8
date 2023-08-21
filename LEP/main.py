@@ -23,13 +23,17 @@ pt, px, py, pz, pt, eta(rapidez), phi (ângulo azimutal)
 """
 
 n_event = 10000 # Numero de eventos 
-id =[];pT = [];px = [];py = [];pz = [];eta = [];phi = [];event=[];particle_name=[]
+id =[];pT = [];px = [];py = [];pz = [];eta = [];phi = [];event=[];particle_name=[];carregada=[]
 #loop event
 for i in range(n_event):
     if not pythia.next(): continue
+
+    contator_carregada =0
     #loop particle
     for particle in pythia.event:
         if  particle.isFinal(): # particula estavel  
+           if particle.isCharged():
+               contator_carregada +=1
            event.append(i)
            id.append(particle.id())
            pT.append(particle.pT())
@@ -39,6 +43,7 @@ for i in range(n_event):
            eta.append(particle.eta())
            phi.append(particle.phi())
            particle_name.append([particle.name(),particle.id()])
+           carregada.append(contator_carregada)
 
 np.savetxt("data/91.19GeV/id.dat",id,delimiter=',',fmt='%.16f')
 np.savetxt("data/91.19GeV/pT.dat",pT,delimiter=',',fmt='%.16f')
@@ -48,4 +53,5 @@ np.savetxt("data/91.19GeV/pz.dat",pz,delimiter=',',fmt='%.16f')
 np.savetxt("data/91.19GeV/eta.dat",eta,delimiter=',',fmt='%.16f')
 np.savetxt("data/91.19GeV/phi.dat",phi,delimiter=',',fmt='%.16f')
 np.savetxt("data/91.19GeV/event.dat",event,delimiter=',',fmt='%.16f')
+np.savetxt("data/91.19GeV/carregado.dat",carregada,delimiter=',',fmt='%.16f')
 np.savetxt("data/91.19GeV/name_id_particle.dat",particle_name,delimiter=',', fmt='%s')

@@ -1,0 +1,9 @@
+phi
+abs(id)==321 || abs(id)==211
+\pi
+eta
+abs(id)==321 || abs(id)==211
+\eta
+pT
+abs(id)==321 || abs(id)==211
+pT (GeV)
