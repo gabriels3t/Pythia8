@@ -1,28 +1,31 @@
 import ROOT
 import sys
 
-def grafico(arquivo,branch,consulta):
+def grafico(arquivo,branch,consulta,label):
     canvas = ROOT.TCanvas("canvas", "Canvas", 800, 600)
     
     entrada = ROOT.TFile(arquivo,'read')
     tree = entrada.Get("tree")
+
     hist_name = "histograma_"+branch
-    print(hist_name)
-    histogram = ROOT.TH1F(hist_name, "abs(id)==321 || abs(id)==211;\pi ;Contagem", 100, -ROOT.Math.Pi(),ROOT.Math.Pi())
-    histogram.GetXaxis().SetTitleSize(0.05) # Tamanho legenda X
-    histogram.GetYaxis().SetTitleSize(0.05)
-    #   histogram.GetYaxis().SetRangeUser(0, 200)
-    histogram.SetFillColor(ROOT.kBlue-9)
-    tree.Draw(branch+">>"+hist_name, consulta)
-
-
+    titulo = consulta
+    if(branch == 'phi'):
+        histogram = ROOT.TH1F(hist_name, titulo+";"+branch+" "+label+" ;Contagem", 100, -ROOT.Math.Pi(),ROOT.Math.Pi())
+        histogram.GetYaxis().SetRangeUser(0, 200)
     
+    histogram = ROOT.TH1F(hist_name, titulo+";"+label+" ;Contagem", 100, 0,0)
+    histogram.GetXaxis().SetTitleSize(0.05) # Tamanho label X
+    histogram.GetYaxis().SetTitleSize(0.05)
+    
+    histogram.SetFillColor(ROOT.kBlue-9)
+    
+    tree.Draw(branch+">>"+hist_name, consulta)
     canvas.Update()
     histogram.Draw()
-    comando= 'phi_abs(id) == 321'
+
     salvar = input("salvar grafico ?").upper()
     if salvar == 'S' or salvar == 'SIM':
-        n = 'grafico/grafico_'+comando
+        n = 'grafico/grafico_'+consulta
         print(n)
         canvas.SaveAs(n+".png")
 
@@ -40,12 +43,10 @@ def switch(case,arquivo):
    elif case ==2:
     branch = input("Insira o nome da Branch : ")
     consulta = input("Insira o Comando : ")
-    grafico(arquivo,branch,consulta)
-"""
+    label_x= input("label x : ")
+    
+    grafico(arquivo,branch,consulta,label_x)
 
-endereco = "data/root/data.root"
-infos_branch(endereco)
-"""
 
 # Verifica se o nome do arquivo foi fornecido como argumento de linha de comando
 if len(sys.argv) < 2:
@@ -55,7 +56,6 @@ if len(sys.argv) < 2:
 # Abre o arquivo fornecido como argumento
 nome_pasta = sys.argv[1]
 try:
-   # infos_branch("data/root/data.root")
    print("Escolha as opcoes:")
    print("1) Informacao branch \n2) Criar grafico")
    escolha = int(input())
